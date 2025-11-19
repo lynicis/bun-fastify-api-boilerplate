@@ -1,8 +1,8 @@
 .idea/
 .vscode/
+.cursor/
 node_modules/
 coverage/
-dist/
-yarn-error.log
-yarn-debug.log
+*.log
 .env
+api

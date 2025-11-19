@@ -1,5 +1,7 @@
 import * as dotenv from "dotenv";
-import { MainConfigModel } from "./model";
+
+import type { MainConfigModel } from "./model";
+
 import { ServerConfig } from "../server/config";
 
 interface IConfig {
@@ -8,7 +10,7 @@ interface IConfig {
 
 class MainConfig implements IConfig {
     ReadConfig(): MainConfigModel {
-        const isAtRemote: string = process.env.IS_AT_REMOTE;
+        const isAtRemote: string = process.env.IS_AT_REMOTE || "";
         if (isAtRemote == null) {
             dotenv.config();
         }
@@ -21,4 +23,4 @@ class MainConfig implements IConfig {
     }
 }
 
-export { IConfig, MainConfig };
+export { type IConfig, MainConfig };

@@ -1,16 +1,18 @@
+import { beforeEach, afterAll, describe, expect, test } from "bun:test";
+
+import type { ServerConfigModel } from "./model";
+
 import { ServerConfig } from "./config";
-import { ServerConfigModel } from "./model";
 
 describe("when call ReadConfig should return ServerConfigModel", () => {
-    const env = process.env;
+    const originalEnv = { ...process.env };
 
     beforeEach(() => {
-        jest.resetModules();
-        process.env = { ...env };
+        process.env = { ...originalEnv };
     });
 
-    afterEach(() => {
-        process.env = env;
+    afterAll(() => {
+        process.env = originalEnv;
     });
 
     test("when SERVER_PORT environment variable set should return with it", () => {
@@ -25,6 +27,7 @@ describe("when call ReadConfig should return ServerConfigModel", () => {
     });
 
     test("when SERVER_PORT environment variable not set should return it with by default port", () => {
+        delete process.env.SERVER_PORT;
         const config: ServerConfigModel = new ServerConfig().ReadConfig();
 
         const expectedConfig: ServerConfigModel = {

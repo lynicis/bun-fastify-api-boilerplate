@@ -1,5 +1,7 @@
-import { CustomError, ICustomError } from "./error";
+import { expect, test } from "bun:test";
 import { constants } from "http2";
+
+import { type ICustomError, CustomError } from "./error";
 
 test("when create new error should return class", () => {
     const cerr = new CustomError(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, "something went wrong");

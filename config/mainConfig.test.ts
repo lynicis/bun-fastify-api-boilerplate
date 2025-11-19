@@ -1,12 +1,15 @@
-import { MainConfigModel } from "./model";
+import { beforeEach, afterEach, describe, expect, jest, test } from "bun:test";
+
+import type { ServerConfigModel } from "../server/model";
+import type { MainConfigModel } from "./model";
+
 import { MainConfig } from "./mainConfig";
-import { ServerConfigModel } from "../server/model";
 
 describe("when call ReadConfig should return MainConfigModel", () => {
     const env = process.env;
 
     beforeEach(() => {
-        jest.resetModules();
+        jest.resetAllMocks();
         process.env = { ...env };
     });
 

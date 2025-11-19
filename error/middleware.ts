@@ -1,18 +1,21 @@
-import * as winston from "winston";
+import type { FastifyRequest, FastifyReply } from "fastify";
+
+import winston from "winston";
+
 import { CustomError } from "./error";
 
-function ErrorHandlerMiddleware(logger?: winston.Logger): (error, request, reply) => any {
+function ErrorHandlerMiddleware(logger?: winston.Logger): (error: Error, request: FastifyRequest, reply: FastifyReply) => FastifyReply {
     return function (error, request, reply) {
         if (error) {
             if (error instanceof CustomError) {
                 logger?.error(error.Message);
-                return reply.Code(error.Code);
+                return reply.code(error.Code).send({ message: error.Message });
             }
 
             return reply.send(error);
         }
 
-        return reply.done();
+        return reply.send();
     };
 }
 

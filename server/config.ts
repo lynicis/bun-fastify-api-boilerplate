@@ -1,5 +1,5 @@
-import { ServerConfigModel } from "./model";
 import { IConfig } from "../config/mainConfig";
+import { ServerConfigModel } from "./model";
 
 class ServerConfig implements IConfig {
     ReadConfig(): ServerConfigModel {

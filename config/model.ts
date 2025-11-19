@@ -1,4 +1,4 @@
-import { ServerConfigModel } from "../server/model";
+import type { ServerConfigModel } from "../server/model";
 
 export type MainConfigModel = {
     server: ServerConfigModel;

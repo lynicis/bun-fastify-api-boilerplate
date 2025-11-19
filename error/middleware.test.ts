@@ -1,21 +1,22 @@
-import { CustomError } from "./error";
+import { expect, test } from "bun:test";
 import { constants } from "http2";
 import fastify from "fastify";
-import * as request from "supertest";
+
 import { ErrorHandlerMiddleware } from "./middleware";
+import { CustomError } from "./error";
 
 test("when error pass to middleware should resolve it", async () => {
     const app = fastify();
 
-    app.setErrorHandler(ErrorHandlerMiddleware(null));
+    app.setErrorHandler(ErrorHandlerMiddleware());
     app.get("/cerror", () => {
         throw new CustomError(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, "something went wrong");
     });
-    await app.listen({ port: 3000 });
+    await app.ready();
 
-    const req = await request("http://127.0.0.1:3000").get("/cerror");
+    const response = await app.inject({ method: "GET", url: "/cerror" });
 
     await app.close();
 
-    expect(req.statusCode).toEqual(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
+    expect(response.statusCode).toEqual(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR);
 });
