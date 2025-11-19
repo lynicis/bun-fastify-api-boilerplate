@@ -12,9 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: oven-sh/setup-bun@v2
-      - run: |
-          bun install --lockfile-only
-          bun lint
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
 
   build:
     runs-on: ubuntu-latest
@@ -25,8 +24,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - name: Build
         run: |
-          bun install --lockfile-only
-          bun build
+          bun install --frozen-lockfile --production
+          bun run build
       - run: |
           ls | grep 'api' || exit 1
 
@@ -39,5 +38,5 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - name: Test
         run: |
-          bun install --lockfile-only
+          bun install --frozen-lockfile
           bun test:ci

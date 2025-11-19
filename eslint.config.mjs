@@ -1,10 +1,10 @@
+import perfectionist from "eslint-plugin-perfectionist";
+import { FlatCompat } from "@eslint/eslintrc";
 import { defineConfig } from "eslint/config";
+import { fileURLToPath } from "node:url";
 import globals from "globals";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
-import perfectionist from "eslint-plugin-perfectionist";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
