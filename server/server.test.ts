@@ -10,6 +10,14 @@ const createConfig = (port = "0"): MainConfigModel => ({
     server: {
         port,
     },
+    telemetry: {
+        enabled: false,
+        serviceName: "test",
+        environment: "test",
+        traceExporterEndpoint: "http://collector",
+        exporterHeaders: {},
+        ignorePaths: ["/health"],
+    },
 });
 
 test("when call server class should return server", () => {

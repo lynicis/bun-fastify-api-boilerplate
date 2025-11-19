@@ -3,9 +3,12 @@ import { fastifyRequestContext } from "@fastify/request-context";
 import winston from "winston";
 
 import type { MainConfigModel } from "../config/model";
-import type { IHandler } from "./model";
 
 import { ErrorHandlerMiddleware } from "../error/middleware";
+
+export interface IHandler {
+    RegisterRoutes(): void;
+}
 
 interface IServer {
     Start(): Promise<FastifyInstance>;
@@ -37,7 +40,11 @@ class Server implements IServer {
             });
         }
         this.app.setErrorHandler(ErrorHandlerMiddleware(this.logger));
-        this.app.get("/health", () => "OK");
+        this.app.get(
+            "/health",
+            { config: { otel: false } },
+            () => "OK",
+        );
         this.handlers?.forEach((handler) => {
             handler.RegisterRoutes();
         });
