@@ -1,7 +1,9 @@
-import * as winston from "winston";
-import { MainConfig } from "./config/mainConfig";
+import winston from "winston";
+
 import type { MainConfigModel } from "./config/model";
-import { Server, type IServer } from "./server/server";
+
+import { type IServer, Server } from "./server/server";
+import { MainConfig } from "./config/mainConfig";
 
 const logger: winston.Logger = winston.createLogger({
     format: winston.format.combine(winston.format.timestamp(), winston.format.json()),

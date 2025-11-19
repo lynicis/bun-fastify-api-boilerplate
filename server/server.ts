@@ -1,6 +1,6 @@
 import Fastify, { type  FastifyListenOptions, type FastifyInstance } from "fastify";
 import { fastifyRequestContext } from "@fastify/request-context";
-import * as winston from "winston";
+import winston from "winston";
 
 import type { MainConfigModel } from "../config/model";
 import type { IHandler } from "./model";
@@ -26,7 +26,7 @@ class Server implements IServer {
             disableRequestLogging: true,
             return503OnClosing: true,
             forceCloseConnections: true,
-        });
+        }).register(import("fastify-graceful-shutdown"));
         this.handlers = handlers;
 
         if (this.logger != null) {
