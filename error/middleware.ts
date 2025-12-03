@@ -8,8 +8,8 @@ function ErrorHandlerMiddleware(logger?: winston.Logger): (error: Error, request
     return function (error, request, reply) {
         if (error) {
             if (error instanceof CustomError) {
-                logger?.error(error.Message);
-                return reply.code(error.Code).send({ message: error.Message });
+                logger?.error(error.message);
+                return reply.code(error.code).send({ message: error.message });
             }
 
             return reply.send(error);

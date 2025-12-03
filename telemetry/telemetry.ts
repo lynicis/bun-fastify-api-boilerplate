@@ -23,23 +23,12 @@ const buildIgnorePattern = (patterns: Array<string>): string | undefined => {
 };
 
 class Telemetry {
-    private sdk?: NodeSDK;
+    private sdk: NodeSDK;
 
     constructor(
         private readonly config: TelemetryConfigModel,
-        private readonly logger?: winston.Logger,
-    ) { }
-
-    async Start(): Promise<void> {
-        if (!this.config.enabled) {
-            this.logger?.info("telemetry disabled");
-            return;
-        }
-
-        if (this.sdk != null) {
-            return;
-        }
-
+        private readonly logger: winston.Logger,
+    ) { 
         const instrumentations = [
             new HttpInstrumentation(),
             new FastifyOtelInstrumentation({
@@ -59,6 +48,13 @@ class Telemetry {
                 headers: this.config.exporterHeaders,
             }),
         });
+    }
+
+    async Start(): Promise<void> {
+        if (!this.config.enabled) {
+            this.logger?.info("telemetry disabled");
+            return;
+        }
 
         this.sdk.start();
         this.logger?.info("telemetry initialized", {
@@ -68,13 +64,8 @@ class Telemetry {
     }
 
     async Stop(): Promise<void> {
-        if (this.sdk == null) {
-            return;
-        }
-
         await this.sdk.shutdown();
-        this.sdk = undefined;
-        this.logger?.info("telemetry stopped");
+        this.logger.info("telemetry stopped");
     }
 }
 

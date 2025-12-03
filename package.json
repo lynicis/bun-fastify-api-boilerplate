@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "bun build ./main.ts --compile --outfile='api'",
-    "start": "bun start main.ts",
+    "start": "bun run main.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "bun test",
